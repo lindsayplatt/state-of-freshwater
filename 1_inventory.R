@@ -55,7 +55,7 @@ p1_targets_list <- list(
   # outside of CONUS, including AK, HI, and US territories. 
   tar_target(
     p1_global_grid,
-    create_global_grid()
+    create_global_grid(cellsize = c(2.5,2.5))
   ),
   
   # Use spatial subsetting to find boxes that overlap the area of interest
