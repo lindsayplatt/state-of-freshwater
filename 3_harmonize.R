@@ -1,8 +1,9 @@
 # Source the functions that will be used to build the targets in p3_targets_list
 source("3_harmonize/src/format_columns.R")
 source("3_harmonize/src/clean_wqp_data.R")
+source("3_harmonize/src/clean_calcium_data.R")
+source("3_harmonize/src/clean_chloride_data.R")
 source("3_harmonize/src/clean_conductivity_data.R")
-source("3_harmonize/src/clean_temperature_data.R")
 source("3_harmonize/src/summarize_wqp_records.R")
 
 p3_targets_list <- list(
@@ -40,8 +41,8 @@ p3_targets_list <- list(
   tar_target(
     p3_wqp_param_cleaning_info,
     tibble(
-      parameter = c('conductivity', 'temperature'),
-      cleaning_fxn = c(clean_conductivity_data, clean_temperature_data))
+      parameter = c('calcium', 'chloride', 'conductivity'),
+      cleaning_fxn = c(clean_calcium_data, clean_chloride_data, clean_conductivity_data))
   ),
   
   # Group the WQP data by parameter group in preparation for parameter-specific
