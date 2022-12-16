@@ -1,4 +1,8 @@
 parameter,CharacteristicName,ResultMeasure.MeasureUnitCode,n_records
+calcium,"Alkalinity, total",mg/l,10632
+calcium,"Alkalinity, total",mg/l CaCO3**,757
+calcium,"Alkalinity, total",PCU,1
+calcium,"Alkalinity, total",NA,109
 calcium,Calcium,mg/l,9829
 calcium,Calcium,ueq/L,262
 calcium,Calcium,ug/l,1258
@@ -7,6 +11,17 @@ chloride,Chloride,mg/l,14776
 chloride,Chloride,mmol/L,29
 chloride,Chloride,ueq/L,262
 chloride,Chloride,NA,350
+conductivity,Conductivity,ms,36
+conductivity,Conductivity,None,77
+conductivity,Conductivity,umho,1
+conductivity,Conductivity,umho/cm,20
+conductivity,Conductivity,uS/cm,9344
+conductivity,Conductivity,NA,2
 conductivity,Specific conductance,umho/cm,2
-conductivity,Specific conductance,uS/cm,52005
+conductivity,Specific conductance,uS/cm,52076
 conductivity,Specific conductance,NA,26
+conductivity,"Specific Conductance, Calculated/Measured Ratio",%,190
+conductivity,"Specific Conductance, Calculated/Measured Ratio",None,15
+conductivity,"Specific Conductance, Calculated/Measured Ratio",nu,6
+conductivity,"Specific Conductance, Calculated/Measured Ratio",uS/cm,99
+conductivity,Specific conductivity***retired***use Specific conductance,uS/cm,242
