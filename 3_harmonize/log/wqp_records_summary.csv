@@ -1,4 +1,12 @@
 parameter,CharacteristicName,ResultMeasure.MeasureUnitCode,n_records
-calcium,Calcium,mg/l,8
-chloride,Chloride,mg/l,17
-conductivity,Specific conductance,uS/cm,62
+calcium,Calcium,mg/l,9829
+calcium,Calcium,ueq/L,262
+calcium,Calcium,ug/l,1258
+calcium,Calcium,NA,67
+chloride,Chloride,mg/l,14776
+chloride,Chloride,mmol/L,29
+chloride,Chloride,ueq/L,262
+chloride,Chloride,NA,350
+conductivity,Specific conductance,umho/cm,2
+conductivity,Specific conductance,uS/cm,52005
+conductivity,Specific conductance,NA,26
