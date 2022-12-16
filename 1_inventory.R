@@ -42,23 +42,12 @@ p1_targets_list <- list(
     format = "file"
   ),
   
-  # Define the spatial area of interest (AOI) for the WQP data pull
-  # This target could also be edited to read in coordinates from a local file
-  # that contains the columns 'lon' and 'lat', e.g. replace data.frame() with 
-  # read_csv("1_inventory/in/my_sites.csv"). See README for an example of how to 
-  # use a shapefile to define the AOI.
-  tar_target(
-    p1_AOI,
-    data.frame(lon = coords_lon,
-               lat = coords_lat)
-  ),
-  
   # Create a spatial (sf) object representing the area of interest
-  tar_target(
-    p1_AOI_sf,
-    sf::st_as_sf(p1_AOI, coords = c("lon","lat"), crs = 4326) %>%
-      summarize(geometry = sf::st_combine(geometry)) %>%
-      sf::st_cast("POLYGON")
+  tar_target(p1_AOI_sf, 
+             tigris::states(class = "sf", year = 2022, progress_bar = FALSE) %>% 
+               st_transform(4326) %>% select(STUSPS, NAME) %>%
+               # Exclude territories
+               filter(!STUSPS %in% c("VI","MP", "GU", "AS", "PR"))
   ),
   
   # Create a big grid of boxes to set up chunked data queries.
@@ -66,7 +55,7 @@ p1_targets_list <- list(
   # outside of CONUS, including AK, HI, and US territories. 
   tar_target(
     p1_global_grid,
-    create_global_grid()
+    create_global_grid(cellsize = c(2.5,2.5))
   ),
   
   # Use spatial subsetting to find boxes that overlap the area of interest

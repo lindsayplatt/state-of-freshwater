@@ -23,11 +23,6 @@ end_date <- "2020-07-31"
 # or to customize parameter groupings. 
 param_groups_select <- c('calcium', 'chloride', 'conductivity')
 
-# Specify coordinates that define the spatial area of interest
-# lat/lon are referenced to WGS84
-coords_lon <- c(-90.057, -90.057, -88.86, -88.86)
-coords_lat <- c(42.759, 43.434, 43.434, 42.759)
-
 # Specify arguments to WQP queries
 # see https://www.waterqualitydata.us/webservices_documentation for more information 
 wqp_args <- list(sampleMedia = c("Water","water"),
