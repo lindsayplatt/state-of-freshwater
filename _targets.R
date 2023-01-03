@@ -11,7 +11,7 @@ source("3_harmonize.R")
 # Define the temporal extent of our data pull
 # set start_date or end_date to "" to query the earliest or latest available date
 start_date <- "1900-01-01"
-end_date <- "2022-12-27" 
+end_date <- "2022-12-31" 
 
 # Define which parameter groups (and CharacteristicNames) to return from WQP. 
 # Different options for parameter groups are represented in the first level of 

@@ -1,9 +1,9 @@
 CharacteristicName,n_sites,n_records
-"Alkalinity, total",99679,1753403
-Calcium,165396,2374226
-Chloride,183251,3087712
+"Alkalinity, total",99727,1754625
+Calcium,165524,2376725
+Chloride,183371,3089557
 Conductance,15,181
-Conductivity,38121,2624110
-Specific conductance,298414,11519145
-"Specific Conductance, Calculated/Measured Ratio",1134,33979
+Conductivity,38125,2624661
+Specific conductance,298461,11521500
+"Specific Conductance, Calculated/Measured Ratio",1134,34503
 Specific conductivity***retired***use Specific conductance,85,1875
