@@ -1,14 +1,24 @@
-# ds-pipelines-targets-example-wqp
-An example targets pipeline for pulling data from the Water Quality Portal (WQP)  
+# state-of-freshwater
+  
+A targets pipeline for pulling salinity data from the Water Quality Portal (WQP). This bones of the inventory and download phases of this pipeline come from the repo `USGS-R/ds-pipelines-targets-example-wqp`.
 
 ## Getting started
-To run the pipeline, check that you've installed the `targets` package in R and then run the following lines:  
+
+To run the pipeline, check that you've installed the appropriate packages. First, you will need the `targets` and `qs` packages. Then, you will need any other package listed next to the argument `packages` in the `tar_option_set()`function call near the top of the `_targets.R` file. 
+
+Once you have successfully installed those packages, run the following lines to build the full pipeline. Note that the inventory takes approximately 3.5 hours to run and the download takes approximately 15 hours.  
 
 ```r
-#install.packages("targets")
 library(targets)
 tar_make()
 ```
+
+You can also run the full pipeline using RStudio's "Background jobs":
+
+1) Open the `run_pipeline.R` file.
+2) Click on the "Background Jobs" tab in your console pane.
+3) Click "Start Background Job" and be sure that the `run_pipeline.R` file is selected (it should be by default if you did step 1).
+4) Follow along with the build progress in the "Background Jobs" tab. 
 
 ## Basic pipeline structure
 
