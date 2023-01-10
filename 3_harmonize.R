@@ -73,16 +73,6 @@ p3_targets_list <- list(
       cleaning_fxn = c(clean_calcium_data, clean_chloride_data, clean_conductivity_data))
   ),
   
-  # Group the WQP data by parameter group in preparation for parameter-specific
-  # data cleaning steps.
-  tar_target(
-    p3_wqp_data_aoi_clean_grp,
-    p3_wqp_data_aoi_clean %>%
-      group_by(parameter) %>%
-      tar_group(),
-    iteration = "group"
-  ),
-  
   # Harmonize WQP data by applying parameter-specific data cleaning steps,
   # including harmonizing units where possible. `p3_wqp_param_cleaning_info` 
   # is a {targets} dependency, so changes to any of the parameter-specific 
@@ -91,18 +81,52 @@ p3_targets_list <- list(
   tar_target(
     p3_wqp_data_aoi_clean_param,
     {
+      data_in <- read_feather(p3_wqp_data_aoi_clean_feather) %>% 
+        left_join(y = p1_char_names_crosswalk, by = c("CharacteristicName" = "char_name"))
+      
       # Decide which function to use
       fxn_to_use <- p3_wqp_param_cleaning_info %>%
-        filter(parameter == unique(p3_wqp_data_aoi_clean_grp$parameter)) %>%
+        filter(parameter == unique(data_in$parameter)) %>%
         pull(cleaning_fxn) %>%
         {.[[1]]}
       
       # If applicable, apply parameter-specific cleaning function
       if(length(fxn_to_use) > 0){
-        do.call(fxn_to_use, list(wqp_data = p3_wqp_data_aoi_clean_grp))
-      } else {.}
+        wqp_clean <- do.call(fxn_to_use, list(wqp_data = data_in))
+      } else {
+        wqp_clean <- data_in
+      }
+      
+      file_out <- gsub('basic_cleaned_', 
+                       sprintf('clean_%s_', unique(data_in$parameter)),
+                       p3_wqp_data_aoi_clean_feather)
+      write_feather(wqp_clean, file_out)
+      return(file_out)
     },
-    map(p3_wqp_data_aoi_clean_grp)
+    map(p3_wqp_data_aoi_clean_feather),
+    format = "file"
+  ),
+  
+  # Save the cleaned data out to a smaller number of files by grouping into 
+  # a single file per parameter
+  tar_target(
+    p3_wqp_clean_file_info, 
+    tibble(file_nm = p3_wqp_data_aoi_clean_param) %>% 
+      mutate(parameter = gsub('clean_|_data_[0-9]*.feather', '', basename(file_nm))) %>% 
+      group_by(parameter) %>% 
+      tar_group(),
+    iteration = "group"),
+  tar_target(
+    p3_wqp_data_aoi_clean_param_feather, {
+      file_out <- sprintf('3_harmonize/out/wqp_clean_%s.feather',
+                          unique(p3_wqp_clean_file_info$parameter))
+      purrr::map(p3_wqp_clean_file_info$file_nm, read_feather) %>% 
+        bind_rows() %>% 
+        write_feather(file_out)
+      return(file_out)
+    },
+    pattern = map(p3_wqp_clean_file_info),
+    format = "file"
   ),
   
   # Summarize the number of records associated with each parameter,
@@ -110,27 +134,21 @@ p3_targets_list <- list(
   # can be summarized using any combination of columns by passing a
   # different vector of column names in `grouping_cols`.
   tar_target(
-    p3_wqp_records_summary_csv,
-    summarize_wqp_records(p3_wqp_data_aoi_clean_param, 
-                          grouping_cols = c('parameter', 
-                                            'CharacteristicName',
-                                            'ResultMeasure.MeasureUnitCode'),
-                          "3_harmonize/log/wqp_records_summary.csv"),
-    format = "file"
+    p3_wqp_records_summary,
+    read_feather(p3_wqp_data_aoi_clean_param_feather) %>% 
+      summarize_wqp_records(grouping_cols = c(
+        'parameter', 
+        'CharacteristicName',
+        'ResultMeasure.MeasureUnitCode')),
+    pattern = map(p3_wqp_data_aoi_clean_param_feather)
   ),
-  
-  # Save output file containing the harmonized data. The code below can be edited
-  # to save the output data to a different file format, but note that a "file"
-  # target expects a character string to be returned when the target is built. 
-  # This target currently represents the output of the pipeline although more 
-  # steps can be added using `p3_wqp_data_aoi_clean_param` as a dependency to 
-  # downstream targets.
   tar_target(
-    p3_wqp_data_aoi_clean_param_rds,{
-      outfile <- "3_harmonize/out/harmonized_wqp_data.rds"
-      saveRDS(p3_wqp_data_aoi_clean_param, outfile)
-      outfile
-    }, format = "file"
+    p3_wqp_records_summary_csv, {
+      file_out <- "3_harmonize/log/wqp_records_summary.csv"
+      readr::write_csv(x = p3_wqp_records_summary, file = file_out) 
+      return(file_out)
+    },
+    format = "file"
   )
 
 )
