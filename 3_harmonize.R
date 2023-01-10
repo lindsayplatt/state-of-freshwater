@@ -1,5 +1,6 @@
 # Source the functions that will be used to build the targets in p3_targets_list
 source("3_harmonize/src/format_columns.R")
+source("3_harmonize/src/add_cleaning_groups.R")
 source("3_harmonize/src/clean_wqp_data.R")
 source("3_harmonize/src/clean_calcium_data.R")
 source("3_harmonize/src/clean_chloride_data.R")
@@ -21,6 +22,28 @@ p3_targets_list <- list(
     format_columns(p2_wqp_data_aoi)
   ),
   
+  # For this large-scale pull, one big data set is proving to be quite slow
+  # and we should save intermediate files. Saving intermediate files based on 
+  # the characteristic group and 1 million record max.
+  tar_target(
+    p3_wqp_data_aoi_formatted_cleaning_grps,
+    p3_wqp_data_aoi_formatted %>%
+      add_cleaning_groups() %>%
+      group_by(cleaning_grp) %>%
+      tar_group(),
+    iteration = "group"
+  ),
+  tar_target(
+    p3_wqp_data_aoi_formatted_cleaning_grps_feather, {
+      data_in <- p3_wqp_data_aoi_formatted_cleaning_grps
+      file_out <- sprintf('3_harmonize/tmp/formatted_data_%s.feather', unique(data_in$cleaning_grp))
+      write_feather(data_in, file_out)
+      return(file_out)
+    },
+    pattern = map(p3_wqp_data_aoi_formatted_cleaning_grps),
+    format = "file"
+  ),
+  
   # Harmonize WQP data by uniting diverse characteristic names under more
   # commonly-used water quality parameter names, flagging missing records,
   # and flagging duplicate records. Duplicated rows are identified using 
@@ -31,8 +54,13 @@ p3_targets_list <- list(
   # default, duplicated rows are flagged and omitted from the dataset. To 
   # retain duplicate rows, set the argument `remove_duplicated_rows` to FALSE. 
   tar_target(
-    p3_wqp_data_aoi_clean,
-    clean_wqp_data(p3_wqp_data_aoi_formatted, p1_char_names_crosswalk)
+    p3_wqp_data_aoi_clean_feather, {
+      file_in <- p3_wqp_data_aoi_formatted_cleaning_grps_feather
+      file_out <- gsub("formatted_", "basic_cleaned_", file_in)
+      clean_wqp_data(file_in, file_out)
+    },
+    pattern = map(p3_wqp_data_aoi_formatted_cleaning_grps_feather),
+    format = "file"
   ),
   
   # Create a table that defines parameter-specific data cleaning functions.

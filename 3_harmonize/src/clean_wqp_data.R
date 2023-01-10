@@ -8,11 +8,10 @@
 #' harmonization steps for temperature and conductivity data, including
 #' harmonizing units where possible. 
 #' 
-#' @param wqp_data data frame containing the data downloaded from the WQP, 
+#' @param file_in feather file containing the data downloaded from the WQP, 
 #' where each row represents a data record. 
-#' @param char_names_crosswalk data frame containing columns "char_name" and 
-#' "parameter". The column "char_name" contains character strings representing 
-#' known WQP characteristic names associated with each parameter.
+#' @param file_out character string representing the feather file path to
+#' save the cleaned data 
 #' @param commenttext_missing character string(s) indicating which strings from
 #' the WQP column "ResultCommentText" correspond with missing result values. By 
 #' default, the column "ResultCommentText" will be searched for the following 
@@ -33,7 +32,7 @@
 #' Returns a formatted and harmonized data frame containing data downloaded from 
 #' the Water Quality Portal, where each row represents a unique data record.
 #' 
-clean_wqp_data <- function(wqp_data, char_names_crosswalk,
+clean_wqp_data <- function(file_in, file_out, 
                            commenttext_missing = c('analysis lost', 'not analyzed', 
                                                    'not recorded', 'not collected', 
                                                    'no measurement taken'),
@@ -46,10 +45,8 @@ clean_wqp_data <- function(wqp_data, char_names_crosswalk,
                            remove_duplicated_rows = TRUE){
 
   # Clean data and assign flags if applicable
+  wqp_data <- read_feather(file_in)
   wqp_data_clean <- wqp_data %>%
-    # harmonize characteristic names by assigning a common parameter name
-    # to the groups of characteristics supplied in `char_names_crosswalk`.
-    left_join(y = char_names_crosswalk, by = c("CharacteristicName" = "char_name")) %>%
     # flag true missing results
     flag_missing_results(., commenttext_missing) %>%
     # flag duplicate records
@@ -65,7 +62,8 @@ clean_wqp_data <- function(wqp_data, char_names_crosswalk,
                     nrow(wqp_data) - nrow(wqp_data_clean)))
   }
   
-  return(wqp_data_clean)
+  write_feather(wqp_data_clean, file_out)
+  return(file_out)
   
 }
 
