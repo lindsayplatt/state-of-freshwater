@@ -3,6 +3,7 @@ _targets
 
 #All pipeline output
 */out/*
+*/tmp/*
 !*/*/.placeholder.txt
 
 #R files

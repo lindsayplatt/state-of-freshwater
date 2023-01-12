@@ -19,7 +19,7 @@ calcium,Calcium,%,1216
 calcium,Calcium,lb/day,4
 calcium,Calcium,mg/g,7
 calcium,Calcium,mg/kg,1060
-calcium,Calcium,mg/l,2066918
+calcium,Calcium,mg/l,2066953
 calcium,Calcium,mg/l CaCO3,5335
 calcium,Calcium,mg/l CaCO3**,48
 calcium,Calcium,MPN,1
@@ -34,7 +34,7 @@ chloride,Chloride,%,42
 chloride,Chloride,% recovery,1
 chloride,Chloride,mg/g,6
 chloride,Chloride,mg/kg,57
-chloride,Chloride,mg/l,2868658
+chloride,Chloride,mg/l,2868698
 chloride,Chloride,mg/l CaCO3**,1
 chloride,Chloride,mmol/L,472
 chloride,Chloride,NTU,64
@@ -85,9 +85,9 @@ conductivity,Specific conductance,S/m,955
 conductivity,Specific conductance,ug/l,700
 conductivity,Specific conductance,umho,597
 conductivity,Specific conductance,umho/cm,1653
-conductivity,Specific conductance,uS/cm,7033673
+conductivity,Specific conductance,uS/cm,7017577
 conductivity,Specific conductance,volts,35
-conductivity,Specific conductance,NA,6137
+conductivity,Specific conductance,NA,6136
 conductivity,"Specific Conductance, Calculated/Measured Ratio",%,6458
 conductivity,"Specific Conductance, Calculated/Measured Ratio",mg/l,11
 conductivity,"Specific Conductance, Calculated/Measured Ratio",None,176
