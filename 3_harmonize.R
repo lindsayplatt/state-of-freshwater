@@ -150,7 +150,13 @@ p3_targets_list <- list(
       return(file_out)
     },
     format = "file"
-  )
+  ),
+  
+  tar_target(p3_wqp_clean_zip, {
+    file_out <- '3_harmonize/out/wqp_clean.zip'
+    zip::zip(file_out, files = p3_wqp_data_aoi_clean_param_feather, mode="cherry-pick")
+    return(file_out)
+  }, format = "file")
 
 )
 
