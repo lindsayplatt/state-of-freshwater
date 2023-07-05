@@ -13,7 +13,7 @@
 clean_chloride_data <- function(wqp_data){
   
   # Clean chloride data
-  wqp_data_out <- wqp_data %>% 
+  wqp_data_harmonized_units <- wqp_data %>% 
     # Convert values from various concentrations to mg/L
     mutate(conversion_multiplier = case_when(
       is.na(ResultMeasure.MeasureUnitCode) ~ NA_integer_,
@@ -23,10 +23,12 @@ clean_chloride_data <- function(wqp_data){
       tolower(ResultMeasure.MeasureUnitCode) == "mg/g" ~ 1000,
       tolower(ResultMeasure.MeasureUnitCode) == "mg/kg" ~ 1,
       tolower(ResultMeasure.MeasureUnitCode) == "ppm" ~ 1,
+      # TODO: what about `ueq/L` and `umol`?
       TRUE ~ NA_integer_
     )) %>% 
     mutate(ResultMeasureValue = ResultMeasureValue * conversion_multiplier) %>% 
-    # Now update units for those unit codes we converted
+    # Now update units for those unit codes we converted, keep original value
+    mutate(ResultMeasure.MeasureUnitCode_original = ResultMeasure.MeasureUnitCode) %>% 
     mutate(ResultMeasure.MeasureUnitCode = case_when(
       is.na(ResultMeasure.MeasureUnitCode) ~ as.character(NA),
       tolower(ResultMeasure.MeasureUnitCode) %in% c(
@@ -37,6 +39,14 @@ clean_chloride_data <- function(wqp_data){
       TRUE ~ ResultMeasure.MeasureUnitCode
     )) %>% 
     select(-conversion_multiplier)
+  
+  # Now filter out missing values (some became a missing value if their unit code was unknown)
+  wqp_data_out <- wqp_data_harmonized_units %>% 
+    filter(!is.na(ResultMeasureValue)) %>% 
+    harmonize_output_columns() # Have columns match output of all other characteristics
+  
+  message(sprintf('`clean_chloride_data()` units harmonization resulted in %s records being dropped',
+                  nrow(wqp_data_harmonized_units)-nrow(wqp_data_out)))
   
   return(wqp_data_out)
   
