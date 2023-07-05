@@ -28,7 +28,7 @@ clean_conductivity_data <- function(wqp_data){
         DetectionQuantitationLimitMeasure.MeasureUnitCode,
       TRUE ~ ResultMeasure.MeasureUnitCode
     )) %>% 
-    # convert values from mS/cm to uS/cm
+    # convert values to uS/cm & keep the original value
     mutate(conversion_multiplier = case_when(
       is.na(ResultMeasure.MeasureUnitCode) ~ NA_integer_,
       tolower(ResultMeasure.MeasureUnitCode) == "us/cm" ~ 1,
@@ -42,7 +42,8 @@ clean_conductivity_data <- function(wqp_data){
       # TODO: what about `ueq/L` and `umol`?
       TRUE ~ NA_integer_
     )) %>% 
-    mutate(ResultMeasureValue = ResultMeasureValue * conversion_multiplier) %>% 
+    mutate(ResultMeasureValue_original = ResultMeasureValue,
+           ResultMeasureValue = ResultMeasureValue * conversion_multiplier) %>% 
     # Now update units for those unit codes we converted
     mutate(ResultMeasure.MeasureUnitCode = case_when(
       is.na(ResultMeasure.MeasureUnitCode) ~ as.character(NA),

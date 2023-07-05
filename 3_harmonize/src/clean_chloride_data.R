@@ -14,7 +14,7 @@ clean_chloride_data <- function(wqp_data){
   
   # Clean chloride data
   wqp_data_harmonized_units <- wqp_data %>% 
-    # Convert values from various concentrations to mg/L
+    # Convert values from various concentrations to mg/L & keep the original value
     mutate(conversion_multiplier = case_when(
       is.na(ResultMeasure.MeasureUnitCode) ~ NA_integer_,
       tolower(ResultMeasure.MeasureUnitCode) == "mg/l" ~ 1,
@@ -26,7 +26,8 @@ clean_chloride_data <- function(wqp_data){
       # TODO: what about `ueq/L` and `umol`?
       TRUE ~ NA_integer_
     )) %>% 
-    mutate(ResultMeasureValue = ResultMeasureValue * conversion_multiplier) %>% 
+    mutate(ResultMeasureValue_original = ResultMeasureValue,
+           ResultMeasureValue = ResultMeasureValue * conversion_multiplier) %>% 
     # Now update units for those unit codes we converted, keep original value
     mutate(ResultMeasure.MeasureUnitCode_original = ResultMeasure.MeasureUnitCode) %>% 
     mutate(ResultMeasure.MeasureUnitCode = case_when(
