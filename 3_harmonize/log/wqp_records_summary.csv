@@ -4,43 +4,40 @@ Calcium,mg/l,2251040
 Chloride,mg/l,2842855
 Conductance,uS/cm,163
 Conductivity,%,790
-Conductivity,None,1854
-Conductivity,S/m,268
 Conductivity,days,77
 Conductivity,deg C,58273
 Conductivity,in,76
 Conductivity,m,114
 Conductivity,mg/l,162
-Conductivity,mho/cm,163
 Conductivity,micron,1
 Conductivity,ms,1136
 Conductivity,ohm,5
 Conductivity,ppm,3
-Conductivity,uS/cm,1472559
+Conductivity,uS/cm,1433225
+Conductivity,uS/cm @25C,39765
 Conductivity,uW/cm2,2
 Conductivity,ug/cm3,759
 Conductivity,ug/l,84
 Conductivity,umho,955
+Conductivity,NA,1854
 "Specific Conductance, Calculated/Measured Ratio",%,6458
-"Specific Conductance, Calculated/Measured Ratio",None,176
 "Specific Conductance, Calculated/Measured Ratio",mg/l,11
 "Specific Conductance, Calculated/Measured Ratio",nu,89
-"Specific Conductance, Calculated/Measured Ratio",uS/cm,25644
+"Specific Conductance, Calculated/Measured Ratio",uS/cm,3537
+"Specific Conductance, Calculated/Measured Ratio",uS/cm @25C,22107
+"Specific Conductance, Calculated/Measured Ratio",NA,176
 Specific conductance,%,2
 Specific conductance,NTU,2
-Specific conductance,None,132
-Specific conductance,S/m,955
 Specific conductance,cfs,1
 Specific conductance,deg C,65
-Specific conductance,mS/m,299
 Specific conductance,mg/l,3832
 Specific conductance,mg/sec,18
-Specific conductance,mho/cm,6010
-Specific conductance,mmhos/cm,176
 Specific conductance,nu,210
 Specific conductance,ppth,2
-Specific conductance,uS/cm,7015644
+Specific conductance,uS/cm,3662793
+Specific conductance,uS/cm @25C,3360291
 Specific conductance,ug/l,700
 Specific conductance,umho,597
 Specific conductance,volts,35
+Specific conductance,NA,447
 Specific conductivity***retired***use Specific conductance,uS/cm,1868
