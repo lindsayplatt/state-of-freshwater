@@ -42,6 +42,7 @@ clean_conductivity_data <- function(wqp_data){
       # TODO: what about `ueq/L` and `umol`?
       TRUE ~ NA_integer_
     )) %>% 
+    mutate(ResultMeasureValue = ResultMeasureValue * conversion_multiplier) %>% 
     # Now update units for those unit codes we converted
     mutate(ResultMeasure.MeasureUnitCode = case_when(
       is.na(ResultMeasure.MeasureUnitCode) ~ as.character(NA),
