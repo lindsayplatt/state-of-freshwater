@@ -176,5 +176,98 @@ remove_duplicates <- function(wqp_data, duplicate_definition){
   
 }
 
-
-
+#' @title Pull out useful columns
+#' 
+#' @description Select only the final columns we want to use in the 
+#' harmonized output and re-order as appropriate.
+#' 
+#' @param wqp_data data frame containing the data downloaded from the WQP, 
+#' where each row represents a data record.
+#' 
+#' @returns 
+#' Returns a data frame containing data downloaded from the Water Portal in which
+#' only the desired columns have been retained. 
+#' 
+harmonize_output_columns <- function(wqp_data) {
+  wqp_data %>% 
+    select(
+      # Basic sample info (who, what, when)
+      ProviderName,
+      OrganizationIdentifier,
+      OrganizationFormalName,
+      MonitoringLocationIdentifier,
+      ADDED_GenericParameter = parameter, 
+      CharacteristicName,
+      USGSPCode,
+      ActivityStartDate,
+      ActivityStartTime.Time,
+      ActivityStartDateTime,
+      ActivityStartTime.TimeZoneCode,
+      # Updated result columns
+      ResultMeasureValue,
+      ResultMeasure.MeasureUnitCode,
+      DetectionQuantitationLimitMeasure.MeasureValue,
+      DetectionQuantitationLimitMeasure.MeasureUnitCode,
+      ADDED_flag_missing_result = flag_missing_result,
+      ADDED_flag_duplicated_row = flag_duplicated_row,
+      # Original result columns
+      ResultMeasureValue_original,
+      ResultMeasure.MeasureUnitCode_original,
+      DetectionQuantitationLimitMeasure.MeasureValue_original, # This is just the non-numeric version
+      # Detailed sample location/condition info
+      ActivityDepthHeightMeasure.MeasureValue,
+      ActivityDepthHeightMeasure.MeasureUnitCode,
+      ActivityDepthAltitudeReferencePointText,
+      ActivityTopDepthHeightMeasure.MeasureValue,
+      ActivityTopDepthHeightMeasure.MeasureUnitCode,
+      ActivityBottomDepthHeightMeasure.MeasureValue,
+      ActivityBottomDepthHeightMeasure.MeasureUnitCode,
+      ActivityConductingOrganizationText,
+      ActivityIdentifier,
+      ProjectIdentifier,
+      ActivityTypeCode,
+      ActivityCommentText,
+      ActivityMediaName,
+      ActivityMediaSubdivisionName,
+      ResultDepthHeightMeasure.MeasureValue,
+      ResultDepthHeightMeasure.MeasureUnitCode,
+      ResultDepthAltitudeReferencePointText,
+      SampleAquifer,
+      HydrologicCondition,
+      HydrologicEvent,
+      # Detailed sample "how" info
+      SampleCollectionMethod.MethodIdentifier,
+      SampleCollectionMethod.MethodIdentifierContext,
+      SampleCollectionMethod.MethodName,
+      SampleCollectionEquipmentName,
+      StatisticalBaseCode,
+      ResultAnalyticalMethod.MethodIdentifier,
+      ResultAnalyticalMethod.MethodIdentifierContext,
+      ResultAnalyticalMethod.MethodName,
+      MethodDescriptionText,
+      LaboratoryName,
+      AnalysisStartDate,
+      ResultLaboratoryCommentText,
+      PreparationStartDate,
+      # Detailed sample result context
+      ResultDetectionConditionText,
+      DetectionQuantitationLimitTypeName,
+      ResultSampleFractionText,
+      MeasureQualifierCode,
+      ResultStatusIdentifier,
+      ResultValueTypeName,
+      ResultWeightBasisText,
+      ResultTimeBasisText,
+      ResultTemperatureBasisText,
+      ResultParticleSizeBasisText,
+      PrecisionValue,
+      ResultCommentText
+    )
+  # Things that were removed purposefully:
+  #   ActivityEndDateTime
+  #   ActivityEndDate
+  #   ActivityEndTime.Time
+  #   ActivityEndTime.TimeZoneCode
+  #   SubjectTaxonomicName
+  #   SampleTissueAnatomyName
+}
