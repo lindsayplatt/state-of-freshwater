@@ -14,8 +14,19 @@
 clean_conductivity_data <- function(wqp_data){
   
   # Harmonize conductivity units when possible
-  wqp_data_out <- wqp_data %>%
+  wqp_data_harmonized_units <- wqp_data %>%
     # convert values from mS/cm to uS/cm
+    mutate(conversion_multiplier = case_when(
+      is.na(ResultMeasure.MeasureUnitCode) ~ NA_integer_,
+      tolower(ResultMeasure.MeasureUnitCode) == "us/cm" ~ 1,
+      tolower(ResultMeasure.MeasureUnitCode) == "ms/cm" ~ 1000,
+      tolower(ResultMeasure.MeasureUnitCode) == "s/m" ~ (10^6/10^3),
+      tolower(ResultMeasure.MeasureUnitCode) == "mmol/l" ~ 35.453,
+      # TODO: what about `ueq/L` and `umol`?
+      TRUE ~ NA_integer_
+    )) %>% 
+    # Keep original unit code
+    mutate(ResultMeasure.MeasureUnitCode_original = ResultMeasure.MeasureUnitCode) %>% 
     mutate(ResultMeasureValue = if_else(!is.na(ResultMeasureValue) &
                                           ResultMeasure.MeasureUnitCode == "mS/cm",
                                         (ResultMeasureValue * 1000), ResultMeasureValue),
@@ -45,7 +56,15 @@ clean_conductivity_data <- function(wqp_data){
     mutate(ResultMeasure.MeasureUnitCode = if_else(!is.na(ResultMeasureValue) & 
                                                      ResultMeasure.MeasureUnitCode == "uS/cm @25C", 
                                                    "uS/cm", ResultMeasure.MeasureUnitCode)) 
-          
+  
+  # Now filter out missing values (some became a missing value if their unit code was unknown)
+  wqp_data_out <- wqp_data_harmonized_units %>% 
+    filter(!is.na(ResultMeasureValue)) %>% 
+    harmonize_output_columns() # Have columns match output of all other characteristics
+  
+  message(sprintf('`clean_conductivity_data()` units harmonization resulted in %s records being dropped',
+                  nrow(wqp_data_harmonized_units)-nrow(wqp_data_out)))
+  
   return(wqp_data_out)
 }
 
