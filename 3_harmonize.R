@@ -111,7 +111,8 @@ p3_targets_list <- list(
   # a single file per parameter
   tar_target(
     p3_wqp_clean_file_info, 
-    tibble(file_nm = p3_wqp_data_aoi_clean_param) %>% 
+    tibble(file_nm = p3_wqp_data_aoi_clean_param,
+           file_hash = tools::md5sum(p3_wqp_data_aoi_clean_param)) %>% 
       mutate(parameter = gsub('clean_|_data_[0-9]*.feather', '', basename(file_nm))) %>% 
       group_by(parameter) %>% 
       tar_group(),
@@ -149,7 +150,13 @@ p3_targets_list <- list(
       return(file_out)
     },
     format = "file"
-  )
+  ),
+  
+  tar_target(p3_wqp_clean_zip, {
+    file_out <- '3_harmonize/out/wqp_clean.zip'
+    zip::zip(file_out, files = p3_wqp_data_aoi_clean_param_feather, mode="cherry-pick")
+    return(file_out)
+  }, format = "file")
 
 )
 

@@ -1,96 +1,12 @@
-parameter,CharacteristicName,ResultMeasure.MeasureUnitCode,n_records
-calcium,"Alkalinity, total",%,17
-calcium,"Alkalinity, total",meq/L,3
-calcium,"Alkalinity, total",mg,1
-calcium,"Alkalinity, total",mg/kg,2
-calcium,"Alkalinity, total",mg/l,1456052
-calcium,"Alkalinity, total",mg/l CaCO3,2158
-calcium,"Alkalinity, total",mg/l CaCO3**,100581
-calcium,"Alkalinity, total",MPN,1
-calcium,"Alkalinity, total",NTU,5
-calcium,"Alkalinity, total",PCU,1
-calcium,"Alkalinity, total",ppm,3373
-calcium,"Alkalinity, total",ueq/L,3056
-calcium,"Alkalinity, total",ug/kg,1
-calcium,"Alkalinity, total",ug/l,151
-calcium,"Alkalinity, total",uS/cm,1
-calcium,"Alkalinity, total",NA,23184
-calcium,Calcium,%,1216
-calcium,Calcium,lb/day,4
-calcium,Calcium,mg/g,7
-calcium,Calcium,mg/kg,1060
-calcium,Calcium,mg/l,2066953
-calcium,Calcium,mg/l CaCO3,5335
-calcium,Calcium,mg/l CaCO3**,48
-calcium,Calcium,MPN,1
-calcium,Calcium,ppb,94
-calcium,Calcium,ppm,14938
-calcium,Calcium,ueq/L,38763
-calcium,Calcium,ug/g,1
-calcium,Calcium,ug/kg,47
-calcium,Calcium,ug/l,175962
-calcium,Calcium,NA,5216
-chloride,Chloride,%,42
-chloride,Chloride,% recovery,1
-chloride,Chloride,mg/g,6
-chloride,Chloride,mg/kg,57
-chloride,Chloride,mg/l,2868698
-chloride,Chloride,mg/l CaCO3**,1
-chloride,Chloride,mmol/L,472
-chloride,Chloride,NTU,64
-chloride,Chloride,ppm,10012
-chloride,Chloride,tons,47
-chloride,Chloride,tons/day,3
-chloride,Chloride,ueq/L,46482
-chloride,Chloride,ug/l,506
-chloride,Chloride,umol,255
-chloride,Chloride,NA,39282
-conductivity,Conductance,uS/cm,163
-conductivity,Conductance,NA,1
-conductivity,Conductivity,%,790
-conductivity,Conductivity,days,77
-conductivity,Conductivity,deg C,58273
-conductivity,Conductivity,in,76
-conductivity,Conductivity,m,114
-conductivity,Conductivity,mg/l,162
-conductivity,Conductivity,mho/cm,163
-conductivity,Conductivity,micron,1
-conductivity,Conductivity,ms,1138
-conductivity,Conductivity,mS/cm,162
-conductivity,Conductivity,None,1854
-conductivity,Conductivity,ohm,5
-conductivity,Conductivity,ppm,3
-conductivity,Conductivity,S/m,268
-conductivity,Conductivity,ug/cm3,759
-conductivity,Conductivity,ug/l,84
-conductivity,Conductivity,umho,955
-conductivity,Conductivity,umho/cm,6273
-conductivity,Conductivity,uS/cm,1474443
-conductivity,Conductivity,uW/cm2,2
-conductivity,Conductivity,NA,680
-conductivity,Specific conductance,%,2
-conductivity,Specific conductance,cfs,1
-conductivity,Specific conductance,deg C,65
-conductivity,Specific conductance,mg/l,3834
-conductivity,Specific conductance,mg/sec,18
-conductivity,Specific conductance,mho/cm,6010
-conductivity,Specific conductance,mmhos/cm,176
-conductivity,Specific conductance,mS/cm,46
-conductivity,Specific conductance,mS/m,299
-conductivity,Specific conductance,None,132
-conductivity,Specific conductance,NTU,2
-conductivity,Specific conductance,nu,210
-conductivity,Specific conductance,ppth,2
-conductivity,Specific conductance,S/m,955
-conductivity,Specific conductance,ug/l,700
-conductivity,Specific conductance,umho,597
-conductivity,Specific conductance,umho/cm,1653
-conductivity,Specific conductance,uS/cm,7017577
-conductivity,Specific conductance,volts,35
-conductivity,Specific conductance,NA,6136
-conductivity,"Specific Conductance, Calculated/Measured Ratio",%,6458
-conductivity,"Specific Conductance, Calculated/Measured Ratio",mg/l,11
-conductivity,"Specific Conductance, Calculated/Measured Ratio",None,176
-conductivity,"Specific Conductance, Calculated/Measured Ratio",nu,89
-conductivity,"Specific Conductance, Calculated/Measured Ratio",uS/cm,25644
-conductivity,Specific conductivity***retired***use Specific conductance,uS/cm,1868
+CharacteristicName,ResultMeasure.MeasureUnitCode,n_records
+"Alkalinity, total",mg/l,1454350
+Calcium,mg/l,2251040
+Chloride,mg/l,2842855
+Conductance,uS/cm,163
+Conductivity,uS/cm,1433225
+Conductivity,uS/cm @25C,39765
+"Specific Conductance, Calculated/Measured Ratio",uS/cm,3537
+"Specific Conductance, Calculated/Measured Ratio",uS/cm @25C,22107
+Specific conductance,uS/cm,3662793
+Specific conductance,uS/cm @25C,450699
+Specific conductivity***retired***use Specific conductance,uS/cm,1868
