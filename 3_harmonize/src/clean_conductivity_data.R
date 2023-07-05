@@ -39,7 +39,6 @@ clean_conductivity_data <- function(wqp_data){
       tolower(ResultMeasure.MeasureUnitCode) == "mho/cm" ~ 10^6,
       tolower(ResultMeasure.MeasureUnitCode) == "mmhos/cm" ~ 1000,
       tolower(ResultMeasure.MeasureUnitCode) == "mmol/l" ~ 35.453,
-      # TODO: what about `ueq/L` and `umol`?
       TRUE ~ NA_integer_
     )) %>% 
     mutate(ResultMeasureValue_original = ResultMeasureValue,
